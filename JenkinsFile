@@ -18,7 +18,8 @@ pipeline {
         sh 'ls -ltr'
         sh 'pwd && "test" '
         // build the project and create a JAR file
-        sh 'cd cicd-ocp-gha-spring-petclinic && mvn clean package'
+        //sh 'cd cicd-ocp-gha-spring-petclinic && mvn clean package'
+        sh 'mvn clean package'
         sh 'pwd'
       }
     }
