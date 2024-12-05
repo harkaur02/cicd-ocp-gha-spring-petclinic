@@ -16,8 +16,10 @@ pipeline {
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
+        sh 'pwd && "test" '
         // build the project and create a JAR file
         sh 'cd cicd-ocp-gha-spring-petclinic && mvn clean package'
+        sh 'pwd'
       }
     }
     stage('Static Code Analysis') {
