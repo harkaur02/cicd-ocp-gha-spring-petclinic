@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-app-petclinic
+  labels:
+    app: spring-boot-app-petclinic
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spring-boot-app-petclinic
+  template:
+    metadata:
+      labels:
+        app: spring-boot-app-petclinic
+    spec:
+      containers:
+      - name: spring-boot-app-petclinic
+        image: thethymca/ultimate-cicd:replaceImageTag
+        ports:
+        - containerPort: 8080
