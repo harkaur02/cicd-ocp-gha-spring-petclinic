@@ -10,7 +10,7 @@ pipeline {
     stage('Checkout') {
       steps {
         sh 'echo passed'
-        git branch: 'main', url: 'https://github.com/harkaur02/cicd-ocp-gha-spring-petclinic.git'
+        //git branch: 'main', url: 'https://github.com/harkaur02/cicd-ocp-gha-spring-petclinic.git'
       }
     }
     stage('Build and Test') {
@@ -18,8 +18,8 @@ pipeline {
         sh 'ls -ltr'
         sh 'pwd && "test" '
         // build the project and create a JAR file
-        sh 'cd cicd-ocp-gha-spring-petclinic && mvn clean package'
-        //sh 'mvn clean package'
+        //sh 'cd cicd-ocp-gha-spring-petclinic && mvn clean package'
+        sh 'mvn clean package'
         sh 'pwd'
       }
     }
@@ -30,7 +30,8 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
           sh 'pwd'
-          sh 'cd cicd-ocp-gha-spring-petclinic && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+          //sh 'cd cicd-ocp-gha-spring-petclinic && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+          sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
         }
       }
     }
@@ -42,7 +43,8 @@ pipeline {
       }
       steps {
         script {
-            sh 'cd cicd-ocp-gha-spring-petclinic && docker build -t ${DOCKER_IMAGE} .'
+            //sh 'cd cicd-ocp-gha-spring-petclinic && docker build -t ${DOCKER_IMAGE} .'
+            sh 'docker build -t ${DOCKER_IMAGE} .'
             def dockerImage = docker.image("${DOCKER_IMAGE}")
             docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
                 dockerImage.push()
